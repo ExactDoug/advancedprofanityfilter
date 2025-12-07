@@ -1395,6 +1395,18 @@ export default class OptionPage {
     showUpdateNotification.checked = this.cfg.showUpdateNotification;
     filterWordList.checked = this.cfg.filterWordList;
 
+    // Audio Muting Settings
+    const muteAudio = document.getElementById('muteAudio') as HTMLInputElement;
+    const muteAudioOffset = document.getElementById('muteAudioOffset') as HTMLInputElement;
+    const muteAudioOffsetValue = document.getElementById('muteAudioOffsetValue') as HTMLSpanElement;
+    const muteAudioOffsetContainer = document.getElementById('muteAudioOffsetContainer') as HTMLDivElement;
+    muteAudio.checked = this.cfg.muteAudio;
+    muteAudioOffset.value = String(this.cfg.muteAudioOffset);
+    muteAudioOffsetValue.textContent = `${this.cfg.muteAudioOffset}ms`;
+    if (this.cfg.muteAudio) {
+      muteAudioOffsetContainer.classList.remove('w3-hide');
+    }
+
     // Censor Settings
     const preserveFirst = document.getElementById('preserveFirst') as HTMLInputElement;
     const preserveLast = document.getElementById('preserveLast') as HTMLInputElement;
@@ -2294,6 +2306,22 @@ export default class OptionPage {
     document.getElementById('showUpdateNotification').addEventListener('click', (evt) => {
       this.saveOptions();
     });
+    document.getElementById('muteAudio').addEventListener('click', (evt) => {
+      const muteAudioOffsetContainer = document.getElementById('muteAudioOffsetContainer') as HTMLDivElement;
+      const checked = (evt.target as HTMLInputElement).checked;
+      if (checked) {
+        muteAudioOffsetContainer.classList.remove('w3-hide');
+      } else {
+        muteAudioOffsetContainer.classList.add('w3-hide');
+      }
+      this.saveOptions();
+    });
+    document.getElementById('muteAudioOffset').addEventListener('input', (evt) => {
+      const value = (evt.target as HTMLInputElement).value;
+      const muteAudioOffsetValue = document.getElementById('muteAudioOffsetValue') as HTMLSpanElement;
+      muteAudioOffsetValue.textContent = `${value}ms`;
+      this.saveOptions();
+    });
     document.getElementById('filterWordList').addEventListener('click', (evt) => {
       this.filterWordListUpdate();
     });
@@ -2672,6 +2700,8 @@ export default class OptionPage {
     const wordlistsEnabledInput = document.getElementById('wordlistsEnabled') as HTMLInputElement;
     const collectStats = document.getElementById('collectStats') as HTMLInputElement;
     const configLoggingLevelSelect = document.getElementById('configLoggingLevelSelect') as HTMLSelectElement;
+    const muteAudio = document.getElementById('muteAudio') as HTMLInputElement;
+    const muteAudioOffset = document.getElementById('muteAudioOffset') as HTMLInputElement;
     this.cfg.censorCharacter = censorCharacterSelect.value;
     this.cfg.censorFixedLength = censorFixedLengthSelect.selectedIndex;
     this.cfg.defaultWordMatchMethod = defaultWordMatchMethodSelect.selectedIndex;
@@ -2690,6 +2720,8 @@ export default class OptionPage {
     this.cfg.wordlistsEnabled = wordlistsEnabledInput.checked;
     this.cfg.collectStats = collectStats.checked;
     this.cfg.loggingLevel = configLoggingLevelSelect.selectedIndex;
+    this.cfg.muteAudio = muteAudio.checked;
+    this.cfg.muteAudioOffset = parseInt(muteAudioOffset.value, 10);
   }
 
   async updateUseSystemTheme(useDeviceThemeInput: HTMLInputElement) {

@@ -197,6 +197,29 @@
               <input id="showUpdateNotification" type="checkbox" class="w3-check" />
               <span id="showUpdateNotificationName">Show update notification</span>
             </label>
+            <br />
+            <label>
+              <input id="muteAudio" type="checkbox" class="w3-check" />
+              <span id="muteAudioName">Mute audio for profanity (Netflix only)</span>
+              <span id="muteAudioNote" class="notes">(Mutes audio ~750ms before profanity is spoken)</span>
+            </label>
+            <div id="muteAudioOffsetContainer" class="w3-hide indent">
+              <label>
+                <span id="muteAudioOffsetLabel">Mute timing offset: </span>
+                <span id="muteAudioOffsetValue">750ms</span>
+              </label>
+              <br />
+              <input
+                id="muteAudioOffset"
+                type="range"
+                min="500"
+                max="1500"
+                step="50"
+                value="750"
+                class="w3-input small-slider"
+              />
+              <span id="muteAudioOffsetNote" class="notes">(How early to mute before profanity)</span>
+            </div>
           </div>
 
           <div id="defaultOptions">

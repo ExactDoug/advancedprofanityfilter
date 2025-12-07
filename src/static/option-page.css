@@ -343,3 +343,15 @@ a#bookmarkletLink:visited {
   font-weight: bolder;
 }
 /* #endregion */
+
+/* #region Audio Muting */
+.indent {
+  margin-left: 24px;
+  margin-top: 8px;
+}
+
+.small-slider {
+  width: 200px;
+  max-width: 100%;
+}
+/* #endregion */
