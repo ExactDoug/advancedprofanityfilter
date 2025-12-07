@@ -5,6 +5,7 @@ import Filter from '@APF/lib/Filter';
 import Page from '@APF/Page';
 import WebConfig from '@APF/WebConfig';
 import Logger from '@APF/lib/Logger';
+import WebAudio from '@APF/WebAudio';
 import type Word from '@APF/lib/Word';
 import type { BackgroundData, Message } from '@APF/Background';
 
@@ -50,6 +51,7 @@ export default class WebFilter extends Filter {
   shadowObserver: MutationObserver;
   stats: Statistics;
   summary: Summary;
+  webAudio: WebAudio;
 
   //#region Class reference helpers
   // Can be overridden in children classes
@@ -89,6 +91,7 @@ export default class WebFilter extends Filter {
     this.processMutationTarget = false;
     this.stats = { words: {} };
     this.summary = {};
+    this.webAudio = new WebAudio(this);
   }
 
   get _defaultStats(): Statistics {
@@ -242,6 +245,10 @@ export default class WebFilter extends Filter {
     // Filter text from the main document and watch for new nodes
     this.init();
     this.log.infoTime('Filter initialized.', this);
+
+    // Initialize WebAudio for Netflix subtitle-based proactive muting
+    this.webAudio.init();
+
     this.processInitialPage();
     this.log.infoTime('Initial page filtered.');
     this.startObserving(document);
