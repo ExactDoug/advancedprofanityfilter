@@ -8,11 +8,11 @@
 import type Filter from '@APF/lib/Filter';
 import SubtitleFetcher, { SubtitleData } from '@APF/lib/SubtitleFetcher';
 import ProactiveAudioMuter from '@APF/lib/ProactiveAudioMuter';
-import type Config from '@APF/lib/Config';
+import type WebConfig from '@APF/WebConfig';
 
 export default class WebAudio {
   private filter: Filter;
-  private config: Config;
+  private config: WebConfig;
   private muter: ProactiveAudioMuter | null = null;
   private enabled: boolean = false;
   private currentMovieId: string | null = null;
@@ -20,7 +20,7 @@ export default class WebAudio {
 
   constructor(filter: Filter) {
     this.filter = filter;
-    this.config = filter.cfg;
+    this.config = filter.cfg as WebConfig;
   }
 
   /**
@@ -52,9 +52,7 @@ export default class WebAudio {
    * Check if audio muting feature is enabled in user config
    */
   private isFeatureEnabled(): boolean {
-    // TODO: Add proper config option once UI is implemented
-    // For now, return true to enable by default
-    return true;
+    return this.config.muteAudio === true;
   }
 
   /**
@@ -177,17 +175,15 @@ export default class WebAudio {
    * Get early mute offset from config
    */
   private getEarlyMuteOffset(): number {
-    // TODO: Get from user config once UI is implemented
-    // For now, default to 750ms (0.75 seconds early)
-    return 750;
+    return this.config.muteAudioOffset || 750;
   }
 
   /**
    * Check if debug mode is enabled
    */
   private isDebugEnabled(): boolean {
-    // TODO: Get from user config once UI is implemented
-    return false;
+    // Use logging level as proxy for debug mode
+    return this.config.loggingLevel <= 1; // DEBUG or TRACE level
   }
 
   /**

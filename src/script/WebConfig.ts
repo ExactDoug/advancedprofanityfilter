@@ -19,6 +19,8 @@ export default class WebConfig extends Config {
   enabledDomainsOnly: boolean;
   enabledFramesOnly: boolean;
   language: string;
+  muteAudio: boolean;
+  muteAudioOffset: number;
   password: string;
   showUpdateNotification: boolean;
   syncLargeKeys: boolean;
@@ -48,6 +50,8 @@ export default class WebConfig extends Config {
     enabledDomainsOnly: false,
     enabledFramesOnly: false,
     language: 'en',
+    muteAudio: false,
+    muteAudioOffset: 750,
     password: null,
     showUpdateNotification: false,
     syncLargeKeys: true,
