@@ -71,6 +71,7 @@
   "devDependencies": {
     "@types/chrome": "^0.0.326",
     "@types/mocha": "^10.0.10",
+    "@xmldom/xmldom": "^0.8.11",
     "addons-linter": "^7.14.0",
     "archiver": "^7.0.1",
     "c8": "^10.1.3",
